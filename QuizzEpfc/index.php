@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-$PRODUCTION = false; // mettre à true avant de mettre en ligne
+$PRODUCTION = false; // must be true before setting on remote server
 if ($_SERVER['SERVER_NAME'] != 'localhost') {
     error_reporting(0);
     $PRODUCTION = true;
