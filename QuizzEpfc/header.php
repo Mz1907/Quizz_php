@@ -29,6 +29,7 @@ if (!$userManager::isLogged() && (!isset($_GET['action']))) {
                     <?php
                 }
                 ?>
+                <li><a href="https://github.com/mzagai/Epfc">Télécharger le code source du projet QuizzEpfc</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
