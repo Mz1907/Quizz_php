@@ -47,14 +47,14 @@ if (UserManager::isLogged()) {
                     for ($i = 0; $i < $quizzCptQuestions; $i++) {
                         ?>
                         <br />Question: (il est possible d'ajouter d'autres questions à votre quizz par la suite en cliquant sur le lien "zone-admin" présent dans le menu, si vous êtes authentifié)
-                        <br /><textarea name="<?php echo $action == 'edit' ? 'question' . $i : 'question' ?>" class="longTextarea"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $editedQuizzQuestions[$i]->_title : ''; ?></textarea><br />
+                        <br /><textarea name="<?php echo $action == 'edit' ? 'question' . $i : 'question' ?>" rows="10" cols="100"> <?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $editedQuizzQuestions[$i]->_title : ''; ?></textarea><br />
                         <?php
                         /* 5 choices */
                         $nbChoix = 4;
                         for ($j = 1, $k = 0; $j <= $nbChoix; $j++, $k++) {
                             ?>
                             Choix n°<?php echo $j; ?>
-                            <br /><textarea name="<?php echo $action == 'edit' ? 'choice' . $i . $j : 'choice' . $j; ?>" class="longTextarea"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $choicesDatas[$i][$k] : ''; ?></textarea><br />
+                            <br /><textarea name="<?php echo $action == 'edit' ? 'choice' . $i . $j : 'choice' . $j; ?>" rows="10" cols="100"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $choicesDatas[$i][$k] : ''; ?></textarea><br />
                         <?php }
                     ?>
                         La bonne réponse est:
@@ -68,7 +68,7 @@ if (UserManager::isLogged()) {
                 <br /><br />
             <?php ?>
                 Catégorie : <select name="category">
-                    <option value="html_css">Html-css</option>
+                    <option value="htmlcss">Html-css</option>
                     <option value="js">Javascript</option>
                     <option value="php">Php</option>
                     <option value="mysql">Mysql</option>

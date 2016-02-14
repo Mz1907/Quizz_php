@@ -83,7 +83,8 @@ define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/'
             <p class="text-left">
                 Zone membre: devenir membre permet de créer, éditer, supprimer un quizz lié à son compte utilisateur
                 (impossible de modifier le quizz d'un autre membre). Pour éditer un quizz il faut cliquez sur le menu zone-admin 
-                qui apparaît lorsque la session utilisateur est créee.
+                qui apparaît lorsque la session utilisateur est créee. Lorsque vous créez un quizz avec du code, il ne faut jamais
+                utiliser de balises d'ouverture de script sinon votre code ne s'affichera pas correctement.
             </p>
             <hr>
         </div>

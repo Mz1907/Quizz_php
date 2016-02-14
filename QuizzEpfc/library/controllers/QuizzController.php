@@ -14,7 +14,7 @@ class QuizzController {
             if (strpos($key, 'uChoice') === 0)
                 $userSelectedChoices [] = $value;
         }
-        if ($userSelectedChoices[$i] == $radioValue)
+        if ($userSelectedChoices[$i] === $radioValue)
             return $style;
         else
             return '';

@@ -28,13 +28,13 @@ if (!empty($_GET['id'])) {
                 ?>
                 <!-- The question n title  -->
                 <h2><?php $geshiColoration = geshi_highlight($question->_title, 'php', '', true);
-                echo $geshiColoration; ?></h2>
+                echo 'Q'.($i+1).': '.$geshiColoration; ?></h2>
                 <!-- The choices of the question n -->
                 <input type="hidden" name="form_choices_sent" value="1">
                 <div <?php if (!empty($quizzDone) && $quizzDone) {
                     echo $quizzController->highlightGoodAnswer($question->getAnswer(), 1);
                     echo $quizzController->highlightUserChoice($userPostedDatas, 1, $i);
-                } ?>><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="1" checked></div><?php $geshiColoration = geshi_highlight($question->_choices[0], 'php', '', true);
+                } ?>><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="1" checked></div><?php $geshiColoration = geshi_highlight($question->_choices[0], 'javascript', '', true);
             echo $geshiColoration; ?><br /><br />
                 <div <?php if (!empty($quizzDone) && $quizzDone) {
                 echo $quizzController->highlightGoodAnswer($question->getAnswer(), 2);
