@@ -1,19 +1,18 @@
-<!DOCTYPE html>
 <?php
 session_start();
-$PRODUCTION = false; // must be true before setting on remote server
+$PRODUCTION = false;
 if ($_SERVER['SERVER_NAME'] != 'localhost') {
-    error_reporting(0);
+	ini_set('display_errors', 1);
+	error_reporting(~0);
     $PRODUCTION = true;
 }
 require_once('library/classes.inc.php');
 require_once('library/common_functions.php');
 require_once('controller.php');
-require_once('geshi/geshi.php');
 $db = new Database();
 $userManager = new UserManager($db, 'User', 'users');
 $userController = new UserController();
-define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/' : '/QuizzEpfc/'));
+define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/QuizzEpfc/' : '/QuizzEpfc/'));
 ?>
 <html lang="fr">
     <head>
@@ -42,6 +41,11 @@ define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/'
                 <script src="assets/js/html5.js"></script>
                 <script src="assets/js/respond.min.js"></script>
         <![endif]-->
+        
+        <!-- Hilight.js call -->
+        <link rel="stylesheet" href="highlight/styles/monokai-sublime.css">
+        <script src="highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
     </head>
     <body>
 
@@ -56,7 +60,7 @@ define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/'
                             <?php
                         }
                         ?>
-                        <li class="active"><?php echo frenchDays(date('w')) . ' ' . date('d') . ' ' . frenchMonth(date('m')) . ' ' . date(' h\hi'); ?></li>
+                        <li class="active"><?php echo frenchDays(date('w')) . ' ' . date('d') . ' ' . frenchMonth(date('m')) . ' ' . date(' H\hi'); ?></li>
                     </ol>
                     <?php require_once('header.php'); ?>
                     <!-- Page Heading -->
@@ -67,11 +71,11 @@ define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/'
             <!-- /.row -->
             <hr>
             <h3>À propos des quizz:</h3>
-            <p class="text-left">Un quizz peut contenir une ou plusieurs questions à choix multiples. 
+            <p class="text-left">Un quizz peut contenir une ou plusieurs questions à  choix multiples. 
                 Lors de la correction, le bouton radio de la bonne réponse est encadré en vert  
                 tandis que la réponse du visiteur est encadrée en rouge. Si le visiteur a trouvé la bonne réponse, alors 
-                la bonne réponse est uniquement encadré en vert.
-                Tout visiteur peut répondre à un quizz.
+                la bonne réponse est uniquement encadrée en vert.
+                Tout visiteur peut répondre à  un quizz.
             </p>
             <p class="text-left">Il existe quatre catégories de quizz:</p>
             <ul>
@@ -81,10 +85,9 @@ define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ($PRODUCTION ? '/epfc/'
                 <li>Mysql</li>
             </ul>
             <p class="text-left">
-                Zone membre: devenir membre permet de créer, éditer, supprimer un quizz lié à son compte utilisateur
+                Zone membre: devenir membre permet de créer, éditer, supprimer un quizz lié à  son compte utilisateur
                 (impossible de modifier le quizz d'un autre membre). Pour éditer un quizz il faut cliquez sur le menu zone-admin 
-                qui apparaît lorsque la session utilisateur est créee. Lorsque vous créez un quizz avec du code, il ne faut jamais
-                utiliser de balises d'ouverture de script sinon votre code ne s'affichera pas correctement.
+                qui apparaît lorsque la session utilisateur est créee.
             </p>
             <hr>
         </div>

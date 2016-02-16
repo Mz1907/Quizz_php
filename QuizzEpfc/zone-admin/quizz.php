@@ -25,9 +25,9 @@ if (UserManager::isLogged()) {
             <br />                        
             <form method="post" action="?page=zone-admin&type=quizz&action=<?php echo $action; ?><?php echo ($addingNewQuizz || $addingNewQuestion ? '' : '&quizzId=' . $quizz->_id); ?>">
                 <input type="hidden" name="form_sent" value="1" />
-            <?php if ($addingNewQuizz || $action == 'edit') { ?>
+                <?php if ($addingNewQuizz || $action == 'edit') { ?>
                     Titre du quizz:
-                    <br /><input type="text" name="quizzName" size="100" value="<?php echo!$addingNewQuizz ? $quizz->_name : ''; ?>" class="longInput" /><br />
+                    <br /><input type="text" name="quizzName" size="100" value="<?php echo!$addingNewQuizz ? $quizz->_name : ''; ?>" class="longInput" /><br /><br />
                 <?php } elseif ($addingNewQuestion) {
                     ?>
                     Dans quel quizz souhaitez-vous ajouter une question ?
@@ -40,35 +40,43 @@ if (UserManager::isLogged()) {
                         }
                         ?>
                     </select>
-                <?php
+                    <?php
                 }
                 if ((!empty($editQuestions) && $editQuestions) || $addingNewQuestion || $addingNewQuizz) {
                     $quizzCptQuestions = $addingNewQuestion || $addingNewQuizz ? 1 : $quizzCptQuestions;
                     for ($i = 0; $i < $quizzCptQuestions; $i++) {
                         ?>
-                        <br />Question: (il est possible d'ajouter d'autres questions à votre quizz par la suite en cliquant sur le lien "zone-admin" présent dans le menu, si vous êtes authentifié)
-                        <br /><textarea name="<?php echo $action == 'edit' ? 'question' . $i : 'question' ?>" rows="10" cols="100"> <?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $editedQuizzQuestions[$i]->_title : ''; ?></textarea><br />
+                        <p>Question: (il est possible d'ajouter d'autres questions à votre quizz par la suite en cliquant sur le lien "zone-admin" présent dans le menu, si vous êtes authentifié)</p>
+                        <textarea name="<?php echo $action == 'edit' ? 'question' . $i : 'question' ?>" class="longTextarea" cols="120" rows="12"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $editedQuizzQuestions[$i]->_title : ''; ?></textarea><br /><br />
+                        <p>Format des 4 choix multiples:</p>
+                        <select name="answerFormat<?php echo $i; ?>">
+                            <option value="0">Texte</option>
+                            <option value="0">Texte</option>
+                            <option value="1">Code</option>
+                        </select><br /><br />
                         <?php
-                        /* 5 choices */
+                        /* 4 choices */
                         $nbChoix = 4;
                         for ($j = 1, $k = 0; $j <= $nbChoix; $j++, $k++) {
                             ?>
                             Choix n°<?php echo $j; ?>
-                            <br /><textarea name="<?php echo $action == 'edit' ? 'choice' . $i . $j : 'choice' . $j; ?>" rows="10" cols="100"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $choicesDatas[$i][$k] : ''; ?></textarea><br />
+                            <br /><textarea name="<?php echo $action == 'edit' ? 'choice' . $i . $j : 'choice' . $j; ?>" class="longTextarea" cols="120" rows="12"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $choicesDatas[$i][$k] : ''; ?></textarea><br />
                         <?php }
-                    ?>
+                        ?>
                         La bonne réponse est:
                         <br /><select name="<?php echo $action == 'add' || $action == 'edit' || $addingNewQuestion ? 'answer' . $i : 'answer'; ?>">
                             <option value="1" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $editedQuizzQuestions[$i]->_answer == '1' ? 'selected="selected"' : ''; ?> >choix 1</option>
                             <option value="2" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $editedQuizzQuestions[$i]->_answer == '2' ? 'selected="selected"' : ''; ?>>choix 2</option>
                             <option value="3" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $editedQuizzQuestions[$i]->_answer == '3' ? 'selected="selected"' : ''; ?>>choix 3</option>
                             <option value="4" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $editedQuizzQuestions[$i]->_answer == '4' ? 'selected="selected"' : ''; ?>>choix 4</option>
-                        </select><?php }
-            } ?>
+                        </select>
+                    <?php }
+                }
+                ?>
                 <br /><br />
             <?php ?>
                 Catégorie : <select name="category">
-                    <option value="htmlcss">Html-css</option>
+                    <option value="html_css">Html-css</option>
                     <option value="js">Javascript</option>
                     <option value="php">Php</option>
                     <option value="mysql">Mysql</option>
@@ -76,7 +84,7 @@ if (UserManager::isLogged()) {
                 <input type="submit" name="submit" value="<?= ($addingNewQuizz || $addingNewQuestion ? 'Ajouter' : 'Editer') ?> !" class="btn-danger" >
             </form>
 
-        <?php
+            <?php
         } else { // the quizz adding/editing form has been posted
             $db->connect();
             if (!$addingNewQuestion) {
@@ -89,9 +97,10 @@ if (UserManager::isLogged()) {
                 $optionsQuizz['_modified'] = $addingNewQuizz ? '' : $quizz->_modified;
                 $quizz = new Quizz($optionsQuizz);
             }
-            if ($action != 'edit') {
+            if ($action != 'edit') { // if $addingNewQuestion
                 $optionsQuestion['_quizzName'] = $addingNewQuizz || $addingNewQuestion || $action == 'edit' ? $_POST['quizzName'] : $question->_id;
                 $optionsQuestion['_title'] = $addingNewQuizz || $addingNewQuestion || $action == 'edit' ? $_POST['question'] : $question->_title;
+                $optionsQuestion['_isChoiceCode'] = $addingNewQuizz || $addingNewQuestion || $action == 'edit' ? $_POST['answerFormat'] : $question->_isChoiceCode;
                 for ($j = 1; $j <= 4; $j++)
                     $choices [] = $_POST['choice' . $j]; // collecting 5 posted choices
                 $optionsQuestion['_choices'] = $choices;
@@ -104,6 +113,7 @@ if (UserManager::isLogged()) {
                     $optionsQuestion['_id'] = $editedQuizzQuestions[$i]->_id;
                     $optionsQuestion['_quizzName'] = $_POST['quizzName'];
                     $optionsQuestion['_title'] = $_POST['question' . $i];
+                    $optionsQuestion['_isChoiceCode'] = $_POST['answerFormat'.$i];
                     for ($j = 1; $j <= 4; $j++)
                         $choices [$i][] = $_POST['choice' . $i . $j]; // collecting 5 posted choices
                     $optionsQuestion['_choices'] = $choices[$i];
@@ -131,7 +141,7 @@ if (UserManager::isLogged()) {
             $message .= ($addingNewQuizz ? 'ajoutée' : 'éditée');
             $message .= ' !</span>';
             echo $message;
-            //echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php?page=zone-admin&type=quizz&action=add').'\';", 2000);</script>';
+            echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php?page=zone-admin&type=quizz&action=add').'\';", 2000);</script>';
         }
     } elseif ($action == 'view_quizz_list' || $action = 'delete') {
         if (is_array($userQuizzList)) {
@@ -162,6 +172,5 @@ if (UserManager::isLogged()) {
             $userQuizzList = array_splice($userQuizzList, $userQuizzListKey, 1);
         }
     }
-
 }
 ?>

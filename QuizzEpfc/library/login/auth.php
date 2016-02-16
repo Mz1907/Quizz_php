@@ -8,7 +8,7 @@
         </div><br />
         <div class="form-group">
             <label for="password">Mot de passe</label>
-            <input type="text" name="password" id="password" />
+            <input type="password" name="password" id="password" />
         </div><br />
         <input type="submit" name="submit" id="submit" class="btn btn-primary" />
         <?php if (!$userManager::isLogged()) echo '<span><a href="index.php?page=login&action=register"> (S\'inscrire)</a></spans>'; ?>

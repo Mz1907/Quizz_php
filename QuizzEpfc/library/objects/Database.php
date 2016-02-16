@@ -9,10 +9,10 @@ class Database {
 
     ////////////////////////////////////////////////////////////////////////////
     public function __construct() {
-        $this->setHost("localhost");
-        $this->setName("quizz");
-        $this->setUserName("root");
-        $this->setPassword("");
+        $this->setHost(""); // your host
+        $this->setName(""); // your db name
+        $this->setUserName(""); // your db login
+        $this->setPassword(""); // your db password
     }
 
     /////////////////////////////////////////////////////////////////////////////

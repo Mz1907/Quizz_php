@@ -3,17 +3,17 @@
 class userController {
     /* check passord size */
 
-    public function checkPseudoSentSize($pseudo) {
+    public function checkPseudoSentSize($pseudo){
         return $result = strlen($pseudo) >= 4 && strlen($pseudo) <= 18 ? true : false;
     }
 
-    public function checkPasswordSentSize($password) {
+    public function checkPasswordSentSize($password){
         return $result = strlen($password) >= 4 && strlen($password) <= 20 ? true : false;
     }
 
     /* hash passwordSent */
 
-    public function hash($passwordSent) {
+    public function hash($passwordSent){
         return $hashedPassword = password_hash($passwordSent, PASSWORD_DEFAULT);
     }
 

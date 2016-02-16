@@ -8,7 +8,7 @@
         </div><br />
         <div class="form-group">
             <label for="password">Mot de passe (min 4 char et max 20 char)</label>
-            <input type="text" name="password" id="password" />
+            <input type="password" name="password" id="password" />
         </div><br />
         <div class="form-group">
             Question subsidiaire: Nom de l'établissement ?

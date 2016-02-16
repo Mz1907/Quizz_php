@@ -215,8 +215,6 @@ th {
   }
   pre,
   blockquote {
-    border: 1px solid #999;
-
     page-break-inside: avoid;
   }
   thead {
@@ -1514,11 +1512,6 @@ samp {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 code {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
-  border-radius: 4px;
 }
 kbd {
   padding: 2px 4px;
@@ -1546,7 +1539,6 @@ pre {
   word-break: break-all;
   word-wrap: break-word;
   background-color: #f5f5f5;
-  border: 1px solid #ccc;
   border-radius: 4px;
 }
 pre code {

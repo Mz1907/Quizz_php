@@ -17,40 +17,68 @@ if (!empty($_GET['id'])) {
         $questionsList = $questionManager->getQuestionByPrimaryKey('_quizzName', $quizz->_name, '_created');
         $cptQuestions = count($questionsList);
         ?>
-        <h1><?php if (!empty($quizzDone) && $quizzDone) echo $title . $quizzDatas[0]->_name;
-        else echo $quizzDatas[0]->_name; ?></h1>
+        <h1><?php if (!empty($quizzDone) && $quizzDone)
+            echo $title . $quizzDatas[0]->_name;
+        else
+            echo $quizzDatas[0]->_name;
+        ?></h1>
         <p>Nombre de questions: <?php echo $cptQuestions; ?></p>
         <form action="" method="POST">
             <?php
             /* displays each questions of the quizz */
             for ($i = 0; $i < $cptQuestions; $i++) {
                 $question = new Question((array) $questionsList[$i]);
+                $areChoicesCode = (bool)$question->_isChoiceCode;
                 ?>
                 <!-- The question n title  -->
-                <h2><?php $geshiColoration = geshi_highlight($question->_title, 'php', '', true);
-                echo 'Q'.($i+1).': '.$geshiColoration; ?></h2>
+                <h4>Question n°<?php echo ($i+1);?>: </h4>
+                <pre><code><?php echo $question->_title; ?></code></pre>
                 <!-- The choices of the question n -->
                 <input type="hidden" name="form_choices_sent" value="1">
-                <div <?php if (!empty($quizzDone) && $quizzDone) {
-                    echo $quizzController->highlightGoodAnswer($question->getAnswer(), 1);
-                    echo $quizzController->highlightUserChoice($userPostedDatas, 1, $i);
-                } ?>><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="1" checked></div><?php $geshiColoration = geshi_highlight($question->_choices[0], 'javascript', '', true);
-            echo $geshiColoration; ?><br /><br />
-                <div <?php if (!empty($quizzDone) && $quizzDone) {
-                echo $quizzController->highlightGoodAnswer($question->getAnswer(), 2);
-                echo $quizzController->highlightUserChoice($userPostedDatas, 2, $i);
-            } ?>><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="2"></div><?php $geshiColoration = geshi_highlight($question->_choices[1], 'php', '', true);
-            echo $geshiColoration; ?><br /><br />
-                <div <?php if (!empty($quizzDone) && $quizzDone) {
-                echo $quizzController->highlightGoodAnswer($question->getAnswer(), 3);
-                echo $quizzController->highlightUserChoice($userPostedDatas, 3, $i);
-            } ?>><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="3"></div><?php $geshiColoration = geshi_highlight($question->_choices[2], 'php', '', true);
-            echo $geshiColoration; ?><br /><br />
-                <div <?php if (!empty($quizzDone) && $quizzDone) {
-                echo $quizzController->highlightGoodAnswer($question->getAnswer(), 4);
-                echo $quizzController->highlightUserChoice($userPostedDatas, 4, $i);
-            } ?>><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="4"></div><?php $geshiColoration = geshi_highlight($question->_choices[3], 'php', '', true);
-            echo $geshiColoration; ?><br /><br />
+                <h5>Votre réponse: </h5>
+                <div style="display: inline-block; <?php
+                    if (!empty($quizzDone) && $quizzDone) {
+                        echo $quizzController->highlightGoodAnswer($question->getAnswer(), 1);
+                        echo $quizzController->highlightUserChoice($userPostedDatas, 1, $i);
+                    }
+                    ?>"><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="1" checked></div>
+                <?php 
+                    if($areChoicesCode) echo '<pre><code>'.$question->_choices[0] . '</code></pre>';
+                    else echo $question->_choices[0];
+                ?><br /><br />
+                
+                <div style="display: inline-block; <?php
+                if (!empty($quizzDone) && $quizzDone) {
+                    echo $quizzController->highlightGoodAnswer($question->getAnswer(), 2);
+                    echo $quizzController->highlightUserChoice($userPostedDatas, 2, $i);
+                }
+                ?>"><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="2"></div>
+                <?php 
+                    if ($areChoicesCode) echo '<pre><code>'.$question->_choices[1] . '</code></pre>';
+                    else echo $question->_choices[1];
+                ?><br /><br />
+                
+                <div style="display: inline-block; <?php
+                if (!empty($quizzDone) && $quizzDone) {
+                    echo $quizzController->highlightGoodAnswer($question->getAnswer(), 3);
+                    echo $quizzController->highlightUserChoice($userPostedDatas, 3, $i);
+                }
+                ?>"><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="3"></div>
+                <?php 
+                    if ($areChoicesCode) echo '<pre><code>'.$question->_choices[2] . '</code></pre>';
+                    else echo $question->_choices[2];
+                ?><br /><br />
+                
+                <div style="display: inline-block; <?php
+                if (!empty($quizzDone) && $quizzDone) {
+                    echo $quizzController->highlightGoodAnswer($question->getAnswer(), 4);
+                    echo $quizzController->highlightUserChoice($userPostedDatas, 4, $i);
+                }
+                ?>"><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="4"></div>
+                <?php 
+                    if ($areChoicesCode) echo '<pre><code>'.$question->_choices[3] . '</code></pre>';
+                    else echo $question->_choices[3];
+                ?><br /><br />
             <?php
         }
         if (!isset($quizzDone) || !$quizzDone) {

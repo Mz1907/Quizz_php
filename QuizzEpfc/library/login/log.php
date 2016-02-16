@@ -1,5 +1,4 @@
 <?php
-
 /* if a new user registers and his registration form is sent */
 if (!empty($_POST['form_register_sent']) && !empty($_POST['pseudo']) && !empty($_POST['password'])) {
     $userController = new UserController();
@@ -19,9 +18,8 @@ if (!empty($_POST['form_register_sent']) && !empty($_POST['pseudo']) && !empty($
         ];
         $user = new User($userDatas);
         $result = $userManager->insertUser($user);
-        $_SESSION['userName'] = $pseudo;
-        header('location: index.php');
-        die();
+        echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php').'\';", 2000);</script>';
+        
     }
     /* there is a problem with atleast one of the 3 check  condition (ckchpseudo or checkpassword or epfc select list)  */ else {
         if (!$checkPseudo) {
@@ -44,25 +42,21 @@ if (!empty($_POST['form_register_sent']) && !empty($_POST['pseudo']) && !empty($
     $testPassword = $userController->checkPasswordSentSize($password);
     if ($testPseudo && $testPassword) {
         $comparaison = $userController->checkAuth($pseudo, $password, $userManager);
-        if ($comparaison) {
+        if ($comparaison){
             $_SESSION['userName'] = $pseudo;
-            header('location: index.php');
-            die();
+			echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php').'\';", 2000);</script>';
         } else {
             if (!$comparaison) {
                 $_SESSION['authMessage'] = 'Votre login ou mot de passe est faux';
-                header('location: index.php');
-                die();
+                echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php').'\';", 2000);</script>';
             }
         }
     }
 }
 /* logout */ elseif (!empty($_GET['action']) && $_GET['action'] == 'logout') {
     session_destroy();
-    header('location: index.php');
-    die();
+    echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php').'\';", 2000);</script>';
 }
 /* if not registering or not login or not loginout (ie: sending empty form) */ else {
-    header('location: index.php');
-    die();
+	echo '<br />Redirection en cours...<script type="text/javascript">setTimeout("location.href = \''.site_url('index.php').'\';", 2000);</script>';
 }

@@ -6,6 +6,7 @@ class Question {
     public $_id;
     public $_quizzName;
     public $_title;
+    public $_isChoiceCode;
     public $_choices;
     public $_answer;
     public $_created;
@@ -71,6 +72,14 @@ class Question {
     public function setTitle($title) {
         $this->_title = $title;
     }
+    
+    public function getIsChoiceCode(){
+        return $this->_isChoiceCode;
+    }
+    
+    public function setIsChoiceCode($isChoiceCode){
+        $this->_isChoiceCode = $isChoiceCode;
+    } 
 
     public function getChoices() {
         return $this->_choices;
