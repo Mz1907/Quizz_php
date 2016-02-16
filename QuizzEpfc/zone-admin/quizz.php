@@ -49,8 +49,7 @@ if (UserManager::isLogged()) {
                         <p>Question: (il est possible d'ajouter d'autres questions à votre quizz par la suite en cliquant sur le lien "zone-admin" présent dans le menu, si vous êtes authentifié)</p>
                         <textarea name="<?php echo $action == 'edit' ? 'question' . $i : 'question' ?>" class="longTextarea" cols="120" rows="12"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $editedQuizzQuestions[$i]->_title : ''; ?></textarea><br /><br />
                         <p>Format des 4 choix multiples:</p>
-                        <select name="answerFormat<?php echo $i; ?>">
-                            <option value="0">Texte</option>
+                        <select name="answerFormat<?php if($action=='edit')echo $i; ?>">
                             <option value="0">Texte</option>
                             <option value="1">Code</option>
                         </select><br /><br />
@@ -98,9 +97,9 @@ if (UserManager::isLogged()) {
                 $quizz = new Quizz($optionsQuizz);
             }
             if ($action != 'edit') { // if $addingNewQuestion
-                $optionsQuestion['_quizzName'] = $addingNewQuizz || $addingNewQuestion || $action == 'edit' ? $_POST['quizzName'] : $question->_id;
-                $optionsQuestion['_title'] = $addingNewQuizz || $addingNewQuestion || $action == 'edit' ? $_POST['question'] : $question->_title;
-                $optionsQuestion['_isChoiceCode'] = $addingNewQuizz || $addingNewQuestion || $action == 'edit' ? $_POST['answerFormat'] : $question->_isChoiceCode;
+                $optionsQuestion['_quizzName'] = $addingNewQuizz || $addingNewQuestion ? $_POST['quizzName'] : $question->_id;
+                $optionsQuestion['_title'] = $addingNewQuizz || $addingNewQuestion  ? $_POST['question'] : $question->_title;
+                $optionsQuestion['_isChoiceCode'] = $addingNewQuizz || $addingNewQuestion  ? $_POST['answerFormat'] : $question->_isChoiceCode;
                 for ($j = 1; $j <= 4; $j++)
                     $choices [] = $_POST['choice' . $j]; // collecting 5 posted choices
                 $optionsQuestion['_choices'] = $choices;
@@ -113,13 +112,14 @@ if (UserManager::isLogged()) {
                     $optionsQuestion['_id'] = $editedQuizzQuestions[$i]->_id;
                     $optionsQuestion['_quizzName'] = $_POST['quizzName'];
                     $optionsQuestion['_title'] = $_POST['question' . $i];
-                    $optionsQuestion['_isChoiceCode'] = $_POST['answerFormat'.$i];
+                    $optionsQuestion['_isChoiceCode'] = (int)$_POST['answerFormat'.$i];
                     for ($j = 1; $j <= 4; $j++)
                         $choices [$i][] = $_POST['choice' . $i . $j]; // collecting 5 posted choices
                     $optionsQuestion['_choices'] = $choices[$i];
                     $optionsQuestion['_answer'] = $_POST['answer' . $i];
                     $optionsQuestion['_created'] = $quizz->_created;
                     $optionsQuestion['_modified'] = '';
+					var_dump($optionsQuestion);
                     $question = new Question($optionsQuestion);
                     $questionManager->updateQuestionInDatabase($question);
                     $optionsQuestion = null;
