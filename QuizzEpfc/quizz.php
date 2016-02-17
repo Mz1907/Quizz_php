@@ -38,8 +38,8 @@ if (!empty($_GET['id'])) {
                 <h5>Votre réponse: </h5>
                 <div style="display: inline-block; <?php
                     if (!empty($quizzDone) && $quizzDone) {
-                        echo $quizzController->highlightGoodAnswer($question->getAnswer(), 1);
                         echo $quizzController->highlightUserChoice($userPostedDatas, 1, $i);
+						echo $quizzController->highlightGoodAnswer($question->getAnswer(), 1);
                     }
                     ?>"><input type="radio" name="uChoice<?php echo ($i + 1); ?>" value="1" checked></div>
                 <?php 
