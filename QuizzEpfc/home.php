@@ -7,7 +7,7 @@ $count = count($quizzList);
 ?>
 <table class="table table-striped">
     <h1>Derniers quizz enregistrés</h1>
-    <caption>Pour faire à un quizz cliquez sur le lien correspondant</caption>
+    <caption>Pour répondre à un quizz cliquez sur le lien correspondant</caption>
     <thead>
         <tr>
             <th>Nom du quizz</th>
