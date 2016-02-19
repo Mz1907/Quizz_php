@@ -50,8 +50,8 @@ if (UserManager::isLogged()) {
                         <textarea name="<?php echo $action == 'edit' ? 'question' . $i : 'question' ?>" class="longTextarea" cols="120" rows="12"><?php echo $action != 'add' && !empty($editQuestions) && $editQuestions ? $editedQuizzQuestions[$i]->_title : ''; ?></textarea><br /><br />
                         <p>Format des 4 choix multiples:</p>
                         <select name="answerFormat<?php if($action=='edit')echo $i; ?>">
-                            <option value="0">Texte</option>
-                            <option value="1">Code</option>
+                            <option value="0" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $editedQuizzQuestions[$i]->_isChoiceCode === '0' ? 'selected="selected"' : ''; ?>>Texte</option>
+                            <option value="1" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $editedQuizzQuestions[$i]->_isChoiceCode === '1' ? 'selected="selected"' : ''; ?>>Code</option>
                         </select><br /><br />
                         <?php
                         /* 4 choices */
@@ -75,10 +75,10 @@ if (UserManager::isLogged()) {
                 <br /><br />
             <?php ?>
                 Catégorie : <select name="category">
-                    <option value="html_css">Html-css</option>
-                    <option value="js">Javascript</option>
-                    <option value="php">Php</option>
-                    <option value="mysql">Mysql</option>
+                    <option value="html_css" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $quizz->_category == 'htmlcss' ? 'selected="selected"' : ''; ?>>Html-css</option>
+                    <option value="js" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $quizz->_category == 'js' ? 'selected="selected"' : ''; ?>>Javascript</option>
+                    <option value="php" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $quizz->_category == 'php' ? 'selected="selected"' : ''; ?>>Php</option>
+                    <option value="mysql" <?php echo!$addingNewQuizz && !empty($editQuestions) && $editQuestions && $quizz->_category == 'mysql' ? 'selected="selected"' : ''; ?>>Mysql</option>
                 </select> <?= $addingNewQuizz || $addingNewQuestion ? '' : '(' . $quizz->_category . ')' ?><br />
                 <input type="submit" name="submit" value="<?= ($addingNewQuizz || $addingNewQuestion ? 'Ajouter' : 'Editer') ?> !" class="btn-danger" >
             </form>
